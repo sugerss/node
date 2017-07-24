@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="javascripts/jquery-1.6.js">
+		</script>
+	</head>
+	<body>
+		
+		<!-- 账号：<input type="text" id="zh"><br>
+		密码：<input type="password" id="mima"><br>
+		手机号：<input type="text" id="phone"><br>
+		QQ：<input type="text" id="qq"><br> -->
+		
+		<input type="file" onchange="setFiles(this)">
+		<button>注册</button>
+		handleClick
+		<script type="text/javascript">
+			var files;
+		  	var setFiles=function(element){
+		  		console.log(element.files)
+		  		files=element.files[0]   
+		  	}
+			$('button').click(function(){
+				console.log('success')
+				var fd=new FormData();  //表单处理数据的方法
+				fd.append('uploadedFile',files) //用append方法以键值对的方式保存
+		        console.log(fd)
+				$.ajax({
+					type:"post",
+					url:"http://localhost:8005/img",
+					async:true,
+					data:fd,
+					contentType:false,
+					processData:false,
+					success:function(e){
+						console.log(e)		
+				 	// 在下面用再次调用ajax   向	
+				 		
+      				}
+				});
+			})
+		</script>
+	</body>
+</html>

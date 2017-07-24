@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="javascripts/jquery-1.6.js"></script>
+</head>
+<body>
+	<script>
+		$.ajax({
+			url:'http://localhost:8005/text',
+		    cache:false,
+		    async:true,
+		    type:'get',
+		    success: function (res) {
+		       	console.log(res)
+		    },
+		    error:function (res) {}
+	   })
+	</script>
+</body>
+</html>
