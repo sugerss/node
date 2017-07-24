@@ -28,6 +28,9 @@ router.post('/',function(req,res){
 				case "image/jpeg":
 				fName=fName+".jpg";
 				break;
+				case "image/jpg":
+				fName=fName+".jpg";
+				break;
 				case "image/png":
 				fName=fName+".png";
 				break;
@@ -39,7 +42,7 @@ router.post('/',function(req,res){
 			fs.renameSync(file.path,newPath);
 			//res.send(newPath);   
 		}	
-		pool.query(`insert into team(img) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
+		pool.query(`insert into history(img) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
 			if (err) throw err;
 			if(rows){
 				res.send('上传成功')
@@ -50,7 +53,7 @@ router.post('/',function(req,res){
 });
 router.get('/photo',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select * from team',function(err,rows){
+	pool.query('select * from history',function(err,rows){
 		if(err) throw err;
 		res.send(rows);
 	})

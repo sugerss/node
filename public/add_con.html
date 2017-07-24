@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="javascripts/jquery-1.6.js">
+		</script>
+	</head>
+	<body>	
+		<input type="file" onchange="setFiles(this)">
+		<button>add photos</button>
+		<div class="photo"></div>
+		<script type="text/javascript">
+			var files;
+			var add='localhost';
+		  	var setFiles=function(element){
+		  		console.log(element.files)
+		  		/*for(var i=0;i<element.files.length;i++){
+		  			files+=element.files[i];
+		  		}*/	  
+		  		files=element.files[0];		  
+		  	}
+			$('button').click(function(){
+				console.log('success')
+				var fd=new FormData();  //表单处理数据的方法
+				fd.append('uploadedFile',files) //用append方法以键值对的方式保存
+		        console.log(fd)
+				$.ajax({
+					type:"post",
+					url:"http://"+add+":8005/img",
+					async:true,
+					data:fd,
+					contentType:false,
+					processData:false,
+					success:function(e){
+						console.log(e)		
+      				}
+				});
+			})
+			$.ajax({
+				type:"get",
+				url:"http://"+add+":8005/img/photo",
+				async:true,
+				success:function(e){				
+					console.log(e)
+					for(var i=0;i<e.length;i++){
+						console.log(e[i].img)
+					$('.photo').append('<img src="'+e[i].img+'">');
+					}
+      			}
+			});
+		</script>
+	</body>
+</html>
