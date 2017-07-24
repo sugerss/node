@@ -8,7 +8,7 @@ var formidable=require('formidable');
 var pool=mysql.createPool({
 	host:'127.0.0.1',
 	user:'root',
-	password:'',
+	password:'PARIS9797',
 	database:'list',
 	port:3306
 })
@@ -16,9 +16,10 @@ var pool=mysql.createPool({
 
 
 router.post('/',function(req,res){
+	var add='localhost';
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
-	form.uploadDir='public/upload/temp';  //上传图片存放的路径
+	form.uploadDir='public/upload/';  //上传图片存放的路径
 	form.parse(req,function(error,fields,files){
 		for(var i in files){
 			var file = files[i];  //保存图片属性
@@ -30,12 +31,28 @@ router.post('/',function(req,res){
 				case "image/png":
 				fName=fName+".png";
 				break;
+				case "image/gif":
+				fName=fName+".gif";
+				break;
 			}
-			var newPath='public/upload/temp'+fName;  //要返回的图片的路径
+			var newPath='public/upload/'+fName;  //要返回的图片的路径
 			fs.renameSync(file.path,newPath);
-			res.send(newPath);   
-		}
-		
+			//res.send(newPath);   
+		}	
+		pool.query(`insert into team(img) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
+			if (err) throw err;
+			if(rows){
+				res.send('上传成功')
+			}
+			
+		})	
 	})
-	});
+});
+router.get('/photo',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select * from team',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
 module.exports=router;

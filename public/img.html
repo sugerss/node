@@ -18,9 +18,10 @@
 		handleClick
 		<script type="text/javascript">
 			var files;
+			var add='localhost';
 		  	var setFiles=function(element){
 		  		console.log(element.files)
-		  		files=element.files[0]   
+		  		files=element.files[0];//for   
 		  	}
 			$('button').click(function(){
 				console.log('success')
@@ -29,7 +30,7 @@
 		        console.log(fd)
 				$.ajax({
 					type:"post",
-					url:"http://localhost:8005/img",
+					url:"http://"+add+":8005/img",
 					async:true,
 					data:fd,
 					contentType:false,
@@ -37,10 +38,21 @@
 					success:function(e){
 						console.log(e)		
 				 	// 在下面用再次调用ajax   向	
-				 		
       				}
 				});
 			})
+			$.ajax({
+				type:"get",
+				url:"http://"+add+":8005/img/photo",
+				async:true,
+				success:function(e){				
+					console.log(e)
+					for(var i=0;i<e.length;i++){
+						console.log(e[i].img)
+					$('.photo').append('<img src="'+e[i].img+'">');
+					}
+      			}
+			});
 		</script>
 	</body>
 </html>
