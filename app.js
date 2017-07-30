@@ -6,10 +6,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
-var get = require('./routes/get');
-var post = require('./routes/post');
-var img = require('./routes/img');
+var work = require('./routes/work');
+var point = require('./routes/point');
+var services = require('./routes/services');
+var vision = require('./routes/vision');
+var history = require('./routes/history');
+var team = require('./routes/team');
+var press = require('./routes/press');
+var life = require('./routes/life');
 var app = express();
 
 // view engine setup
@@ -25,10 +29,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
-app.use('/text',get);
-app.use('/pos',post);
-app.use('/img',img);
+app.use('/work', work);
+app.use('/point',point);
+app.use('/services',services);
+app.use('/vision',vision);
+app.use('/history',history);
+app.use('/team',team);
+app.use('/press',press);
+app.use('/life',life);
 app.use('/static', express.static('public'));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

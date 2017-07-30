@@ -12,11 +12,8 @@ var pool=mysql.createPool({
 	database:'list',
 	port:3306
 })
-
-
-
 router.post('/',function(req,res){
-	var add='localhost';
+	var add='192.168.119.127';
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
 	form.uploadDir='public/upload/';  //上传图片存放的路径
