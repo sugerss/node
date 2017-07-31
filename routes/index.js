@@ -275,6 +275,7 @@ router.get('/home_text',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	pool.query('select banner_text,services_title,services_text,china_title,china_text from home',function(err,rows){
 		if(err) throw err;
+		console.log(111);
 		res.send(rows);
 	})
 });
