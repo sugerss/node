@@ -46,6 +46,13 @@ router.post('/img',function(req,res){
 		})	
 	})
 });
+router.get('/team_img',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select img from team',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
 router.post('/',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var name=req.body['name'];
@@ -58,5 +65,12 @@ router.post('/',function(req,res){
 			res.send('上传成功')
 		}			
 	})	
+});
+router.get('/team',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select name,job_one,job_two,intro from team',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
 });
 module.exports=router;

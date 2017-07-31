@@ -11,7 +11,7 @@ var pool=mysql.createPool({
 	port:3306
 })
 const add='192.168.119.127';
-router.post('/vision_bg',function(req,res){	
+router.post('/vision/bg',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
 	form.uploadDir='public/upload/'; 
@@ -45,7 +45,14 @@ router.post('/vision_bg',function(req,res){
 		})	
 	})
 });
-router.post('/vision_img',function(req,res){	
+router.get('/vision_bg',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select vision_bg from vision',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
+router.post('/vision/img',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
 	form.uploadDir='public/upload/'; 
@@ -79,7 +86,14 @@ router.post('/vision_img',function(req,res){
 		})	
 	})
 });
-router.post('/prize_img',function(req,res){	
+router.get('/vision_img',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select vision_img from vision',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
+router.post('/prize/img',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
 	form.uploadDir='public/upload/'; 
@@ -113,7 +127,14 @@ router.post('/prize_img',function(req,res){
 		})	
 	})
 });
-router.post('/vision_history_img',function(req,res){	
+router.get('/prize_img',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select prize_img from vision',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
+router.post('/vision_history',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
 	form.uploadDir='public/upload/'; 
@@ -145,6 +166,13 @@ router.post('/vision_history_img',function(req,res){
 			}
 			
 		})	
+	})
+});
+router.get('/vision_history_img',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select vision_history_img from vision',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
 	})
 });
 router.post('/',function(req,res){

@@ -45,8 +45,15 @@ router.post('/gif',function(req,res){
 		})	
 	})
 });
+router.get('/services_gif',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select services_gif from services',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
 router.post('/img',function(req,res){	
-	res.header("Access-Control-Allow-Origin", "*"); //跨域
+	res.header("Access-Control-Allow-Origin", "*");
 	var form = new formidable.IncomingForm();
 	form.uploadDir='public/upload/'; 
 	form.parse(req,function(error,fields,files){
@@ -77,6 +84,13 @@ router.post('/img',function(req,res){
 			}
 			
 		})	
+	})
+});
+router.get('/services_img',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select services_img from services',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
 	})
 });
 router.post('/small',function(req,res){	
@@ -113,6 +127,13 @@ router.post('/small',function(req,res){
 		})	
 	})
 });
+router.get('/services_small_pic',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select services_small_pic from services',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
 router.post('/services',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var services_vision=req.body['services_vision'];
@@ -120,16 +141,16 @@ router.post('/services',function(req,res){
 	var services_admin=req.body['services_admin'];
 	var services_work=req.body['services_work'];
 	var services_more=req.body['services_more'];
-	pool.query(`insert into home(services_vision,services_text,services_admin,services_work,services_more) values('${services_vision}','${services_text}','${services_admin}','${services_work}','${services_more}')`,function(err,rows){
+	pool.query(`insert into services(services_vision,services_text,services_admin,services_work,services_more) values('${services_vision}','${services_text}','${services_admin}','${services_work}','${services_more}')`,function(err,rows){
 		if (err) throw err;
 		if(rows){
 			res.send('上传成功')
 		}			
 	})	
 });
-router.get('/datas',function(req,res){
+router.get('/text',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select services_vision,services_text,services_admin,services_work,services_more from home',function(err,rows){
+	pool.query('select services_vision,services_text,services_admin,services_work,services_more from services',function(err,rows){
 		if(err) throw err;
 		res.send(rows);
 	})

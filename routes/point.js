@@ -43,4 +43,11 @@ router.get('/points',function(req,res){
 		res.send(rows);
 	})
 });
+router.get('/popular_text',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select popular_title,popular_detail from popular',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
 module.exports=router;

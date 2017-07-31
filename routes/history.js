@@ -46,6 +46,13 @@ router.post('/img',function(req,res){
 		})	
 	})
 });
+router.get('/history_img',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select img from history',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
 router.post('/',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var year=req.body['year'];
@@ -56,5 +63,12 @@ router.post('/',function(req,res){
 			res.send('上传成功')
 		}			
 	})	
+});
+router.get('/history',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select year,text from history',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
 });
 module.exports=router;

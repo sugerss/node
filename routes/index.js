@@ -295,7 +295,7 @@ router.post('/home/banner',function(req,res){
 
 router.get('/home_banner',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select services_one_title,services_one_text,services_one_time,services_two_title,services_two_time from home',function(err,rows){
+	pool.query('select services_one_title,services_one_text,services_one_time,services_two_title,services_two_time from home_smallbanner',function(err,rows){
 		if(err) throw err;
 		res.send(rows);
 	})

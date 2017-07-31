@@ -45,6 +45,13 @@ router.post('/img/work',function(req,res){
 		})	
 	})
 });
+router.get('/img_work',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select work_img from works',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
 router.post('/img/one',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -77,6 +84,13 @@ router.post('/img/one',function(req,res){
 			}
 			
 		})	
+	})
+});
+router.get('/img_one',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select pic_one from work_focus',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
 	})
 });
 router.post('/img/two',function(req,res){	
@@ -113,6 +127,13 @@ router.post('/img/two',function(req,res){
 		})	
 	})
 });
+router.get('/img_two',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select pic_two from work_focus',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
 router.post('/img/three',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -145,6 +166,13 @@ router.post('/img/three',function(req,res){
 			}
 			
 		})	
+	})
+});
+router.get('/img_three',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select pic_three from work_focus',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
 	})
 });
 router.post('/img/four',function(req,res){	
@@ -181,6 +209,13 @@ router.post('/img/four',function(req,res){
 		})	
 	})
 });
+router.get('/img_four',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select pic_four from work_focus',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
 router.post('/img/poster',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -213,6 +248,13 @@ router.post('/img/poster',function(req,res){
 			}
 			
 		})	
+	})
+});
+router.get('/img_poster',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select poster_bg from works',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
 	})
 });
 router.post('/',function(req,res){

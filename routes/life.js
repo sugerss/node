@@ -45,6 +45,13 @@ router.post('/one',function(req,res){
 		})	
 	})
 });
+router.get('/life_pic_one',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select life_pic_one from life',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
 router.post('/two',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -77,6 +84,13 @@ router.post('/two',function(req,res){
 			}
 			
 		})	
+	})
+});
+router.get('/life_pic_two',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select life_pic_two from life',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
 	})
 });
 router.post('/three',function(req,res){	
@@ -113,6 +127,13 @@ router.post('/three',function(req,res){
 		})	
 	})
 });
+router.get('/life_pic_three',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select life_pic_three from life',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
 router.post('/four',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -145,6 +166,13 @@ router.post('/four',function(req,res){
 			}
 			
 		})	
+	})
+});
+router.get('/life_pic_four',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select life_pic_four from life',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
 	})
 });
 router.post('/five',function(req,res){	
@@ -181,6 +209,13 @@ router.post('/five',function(req,res){
 		})	
 	})
 });
+router.get('/life_pic_five',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select life_pic_five from life',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
 router.post('/six',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -213,6 +248,13 @@ router.post('/six',function(req,res){
 			}
 			
 		})	
+	})
+});
+router.get('/life_pic_six',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select life_pic_six from life',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
 	})
 });
 router.post('/seven',function(req,res){	
@@ -249,6 +291,13 @@ router.post('/seven',function(req,res){
 		})	
 	})
 });
+router.get('/life_pic_seven',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select life_pic_seven from life',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
 router.post('/eight',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -283,7 +332,13 @@ router.post('/eight',function(req,res){
 		})	
 	})
 });
-
+router.get('/life_pic_eight',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select life_pic_eight from life',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
 router.post('/',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var title=req.body['title'];

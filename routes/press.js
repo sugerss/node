@@ -26,6 +26,13 @@ router.post('/',function(req,res){
 		}			
 	})	
 });
+router.get('/press',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select contact,title,sub_title,name,con,time,detail from press',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
 router.post('/popular',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var popular_title=req.body['popular_title'];
@@ -37,11 +44,12 @@ router.post('/popular',function(req,res){
 		}			
 	})	
 });
-router.get('/press',function(req,res){
+router.get('/press_popular',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select contact,title,sub_title,name,con,time,detail from press',function(err,rows){
+	pool.query('select popular_title,popular_detail from popular',function(err,rows){
 		if(err) throw err;
 		res.send(rows);
 	})
 });
+
 module.exports=router;
