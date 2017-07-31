@@ -10,7 +10,7 @@ var pool=mysql.createPool({
 	database:'list',
 	port:3306
 })
-const add='192.168.119.127';
+const add='192.168.43.16';
 router.post('/one',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
