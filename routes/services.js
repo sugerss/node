@@ -134,7 +134,7 @@ router.get('/services_small_pic',function(req,res){
 		res.send(rows);
 	})
 });
-router.post('/services',function(req,res){
+router.post('/',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var services_vision=req.body['services_vision'];
 	var services_text=req.body['services_text'];

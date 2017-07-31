@@ -13,7 +13,7 @@ var pool=mysql.createPool({
 	port:3306
 })
 const add='192.168.43.16';
-router.post('/',function(req,res){
+/*router.post('/',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
 	form.uploadDir='public/upload/';  //上传图片存放的路径
@@ -54,5 +54,5 @@ router.get('/photo',function(req,res){
 		if(err) throw err;
 		res.send(rows);
 	})
-});
+});*/
 module.exports=router;

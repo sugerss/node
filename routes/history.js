@@ -12,7 +12,7 @@ var pool=mysql.createPool({
 })
 const add='192.168.43.16';
 router.post('/img',function(req,res){	
-	res.header("Access-Control-Allow-Origin", "*"); //跨域
+	res.header("Access-Control-Allow-Origin", "*");
 	var form = new formidable.IncomingForm();
 	form.uploadDir='public/upload/'; 
 	form.parse(req,function(error,fields,files){
@@ -63,11 +63,11 @@ router.post('/',function(req,res){
 		}			
 	})	
 });
-router.get('/history',function(req,res){
+/*router.get('/history',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	pool.query('select year,text from history',function(err,rows){
 		if(err) throw err;
 		res.send(rows);
 	})
-});
+});*/
 module.exports=router;

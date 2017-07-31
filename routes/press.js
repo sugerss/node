@@ -19,7 +19,7 @@ router.post('/',function(req,res){
 	var con=req.body['con'];
 	var time=req.body['time'];
 	var detail=req.body['detail'];
-	pool.query(`insert into press(contact,title,sub_title,name,con,time,detail) values('${contact}','${title}','${sub_title}','${name}','${con}','${time}','${detail}')`,function(err,rows){
+	pool.query(`insert into press(contact,title,sub_title,con,time,detail) values('${contact}','${title}','${sub_title}','${con}','${time}','${detail}')`,function(err,rows){
 		if (err) throw err;
 		if(rows){
 			res.send('上传成功')

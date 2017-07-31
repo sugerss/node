@@ -59,7 +59,7 @@ router.post('/',function(req,res){
 	var job_one=req.body['job_one'];
 	var job_two=req.body['job_two'];
 	var intro=req.body['intro'];
-	pool.query(`insert into history(name,job_one,job_two,intro) values('${name}','${job_one}','${job_two}','${intro}')`,function(err,rows){
+	pool.query(`insert into team(name,job_one,job_two,intro) values('${name}','${job_one}','${job_two}','${intro}')`,function(err,rows){
 		if (err) throw err;
 		if(rows){
 			res.send('上传成功')

@@ -11,6 +11,47 @@ var pool=mysql.createPool({
 	port:3306
 })
 const add='192.168.43.16';
+router.post('/img/poster',function(req,res){	
+	res.header("Access-Control-Allow-Origin", "*"); //跨域
+	var form = new formidable.IncomingForm();
+	form.uploadDir='public/upload/'; 
+	form.parse(req,function(error,fields,files){
+		for(var i in files){
+			var file = files[i];  
+			var fName = (new Date()).getTime()  
+			switch(file.type){   
+				case "image/jpeg":
+				fName=fName+".jpg";
+				break;
+				case "image/jpg":
+				fName=fName+".jpg";
+				break;
+				case "image/png":
+				fName=fName+".png";
+				break;
+				case "image/gif":
+				fName=fName+".gif";
+				break;
+			}
+			var newPath='public/upload/'+fName; 
+			fs.renameSync(file.path,newPath);   
+		}	
+		pool.query(`insert into works(poster_bg) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
+			if (err) throw err;
+			if(rows){
+				res.send('上传成功')
+			}
+			
+		})	
+	})
+});
+router.get('/poster_bg',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select poster_bg from works',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
 router.post('/img/work',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -45,9 +86,91 @@ router.post('/img/work',function(req,res){
 		})	
 	})
 });
-router.get('/img_work',function(req,res){
+router.get('/video',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	pool.query('select work_img from works',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
+/*router.post('/img/video',function(req,res){	
+	res.header("Access-Control-Allow-Origin", "*"); //跨域
+	var form = new formidable.IncomingForm();
+	form.uploadDir='public/upload/'; 
+	form.parse(req,function(error,fields,files){
+		for(var i in files){
+			var file = files[i];  
+			var fName = (new Date()).getTime()  
+			switch(file.type){   
+				case "image/jpeg":
+				fName=fName+".jpg";
+				break;
+				case "image/jpg":
+				fName=fName+".jpg";
+				break;
+				case "image/png":
+				fName=fName+".png";
+				break;
+				case "image/gif":
+				fName=fName+".gif";
+				break;
+			}
+			var newPath='public/upload/'+fName; 
+			fs.renameSync(file.path,newPath);   
+		}	
+		pool.query(`insert into works(video) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
+			if (err) throw err;
+			if(rows){
+				res.send('上传成功')
+			}
+			
+		})	
+	})
+});
+router.get('/video_url',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select video from works',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});*/
+router.post('/img/prize',function(req,res){	
+	res.header("Access-Control-Allow-Origin", "*"); //跨域
+	var form = new formidable.IncomingForm();
+	form.uploadDir='public/upload/'; 
+	form.parse(req,function(error,fields,files){
+		for(var i in files){
+			var file = files[i];  
+			var fName = (new Date()).getTime()  
+			switch(file.type){   
+				case "image/jpeg":
+				fName=fName+".jpg";
+				break;
+				case "image/jpg":
+				fName=fName+".jpg";
+				break;
+				case "image/png":
+				fName=fName+".png";
+				break;
+				case "image/gif":
+				fName=fName+".gif";
+				break;
+			}
+			var newPath='public/upload/'+fName; 
+			fs.renameSync(file.path,newPath);   
+		}	
+		pool.query(`insert into works(prize_img) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
+			if (err) throw err;
+			if(rows){
+				res.send('上传成功')
+			}
+			
+		})	
+	})
+});
+router.get('/prize_img',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select prize_img from works',function(err,rows){
 		if(err) throw err;
 		res.send(rows);
 	})
