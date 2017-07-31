@@ -79,7 +79,40 @@ router.post('/img',function(req,res){
 		})	
 	})
 });
-
+router.post('/small',function(req,res){	
+	res.header("Access-Control-Allow-Origin", "*"); //跨域
+	var form = new formidable.IncomingForm();
+	form.uploadDir='public/upload/'; 
+	form.parse(req,function(error,fields,files){
+		for(var i in files){
+			var file = files[i];  
+			var fName = (new Date()).getTime()  
+			switch(file.type){   
+				case "image/jpeg":
+				fName=fName+".jpg";
+				break;
+				case "image/jpg":
+				fName=fName+".jpg";
+				break;
+				case "image/png":
+				fName=fName+".png";
+				break;
+				case "image/gif":
+				fName=fName+".gif";
+				break;
+			}
+			var newPath='public/upload/'+fName; 
+			fs.renameSync(file.path,newPath);   
+		}	
+		pool.query(`insert into services(services_small_pic) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
+			if (err) throw err;
+			if(rows){
+				res.send('上传成功')
+			}
+			
+		})	
+	})
+});
 router.post('/services',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var services_vision=req.body['services_vision'];

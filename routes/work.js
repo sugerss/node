@@ -217,7 +217,7 @@ router.post('/img/poster',function(req,res){
 });
 router.post('/',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	var company=req.body['company'];
+	var poster_company=req.body['poster_company'];
 	var poster_name=req.body['poster_name'];
 	var year=req.body['year'];
 	var detail=req.body['detail'];
@@ -226,7 +226,7 @@ router.post('/',function(req,res){
 	var prize_img=req.body['prize_img'];
 	var prize_text=req.body['prize_text'];
 	var prize_time=req.body['prize_time'];
-	pool.query(`insert into works(poster_company,poster_name,year,detail,work_say,work_about,prize_img,prize_text,prize_time) values('${company}','${poster_name}','${year}','${detail}','${work_say}','${work_about}','${prize_img}','${prize_text}','${prize_time}')`,function(err,rows){
+	pool.query(`insert into works(poster_company,poster_name,year,detail,work_say,work_about,prize_img,prize_text,prize_time) values('${poster_company}','${poster_name}','${year}','${detail}','${work_say}','${work_about}','${prize_img}','${prize_text}','${prize_time}')`,function(err,rows){
 		if (err) throw err;
 		if(rows){
 			res.send('上传成功')
