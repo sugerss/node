@@ -28,7 +28,7 @@ router.post('/',function(req,res){
 });
 router.get('/press',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select contact,title,sub_title,name,con,time,detail from press',function(err,rows){
+	pool.query('select contact,title,sub_title,con,time,detail from press',function(err,rows){
 		if(err) throw err;
 		res.send(rows);
 	})
