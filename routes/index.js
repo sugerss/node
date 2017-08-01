@@ -11,8 +11,6 @@ var pool=mysql.createPool({
 	port:3306
 })
 const add='192.168.43.16';
-//const add='localhost';
-//const add='192.168.43.189';
 router.post('/home/one',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -322,6 +320,7 @@ router.get('/home_text',function(req,res){
 		res.send(rows);
 	})
 });
+
 router.post('/home/banner',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var services_one_title=req.body['services_one_title'];
@@ -337,7 +336,7 @@ router.post('/home/banner',function(req,res){
 	})	
 });
 
-router.get('/',function(req,res){
+router.get('/home_banner',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	pool.query('select services_one_title,services_one_text,services_one_time,services_two_title,services_two_time from home_smallbanner',function(err,rows){
 		if(err) throw err;
