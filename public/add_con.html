@@ -12,12 +12,9 @@
 		<div class="photo"></div>
 		<script type="text/javascript">
 			var files;
-			var add='localhost';
+			var add='192.168.43.16';
 		  	var setFiles=function(element){
-		  		console.log(element.files)
-		  		/*for(var i=0;i<element.files.length;i++){
-		  			files+=element.files[i];
-		  		}*/	  
+		  		console.log(element.files)  
 		  		files=element.files[0];		  
 		  	}
 			$('button').click(function(){
@@ -37,7 +34,7 @@
       				}
 				});
 			})
-			$.ajax({
+			/*$.ajax({
 				type:"get",
 				url:"http://"+add+":8005/img/photo",
 				async:true,
@@ -48,7 +45,7 @@
 					$('.photo').append('<img src="'+e[i].img+'">');
 					}
       			}
-			});
+			});*/
 		</script>
 	</body>
 </html>

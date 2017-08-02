@@ -52,7 +52,7 @@ router.get('/home_one',function(req,res){
 		res.send(rows);
 	})
 });
-/*router.post('/home/two',function(req,res){	
+router.post('/home/two',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
 	form.uploadDir='public/upload/'; 
@@ -61,23 +61,23 @@ router.get('/home_one',function(req,res){
 			var file = files[i];  
 			var fName = (new Date()).getTime()  
 			switch(file.type){   
-				case "image/jpeg":
-				fName=fName+".jpg";
+				case "video/webm":
+				fName=fName+".webm";
 				break;
-				case "image/jpg":
-				fName=fName+".jpg";
+				case "video/mp4":
+				fName=fName+".mp4";
 				break;
-				case "image/png":
-				fName=fName+".png";
+				case "video/AVI":
+				fName=fName+".AVI";
 				break;
-				case "image/gif":
-				fName=fName+".gif";
+				case "video/wmv":
+				fName=fName+".wmv";
 				break;
 			}
 			var newPath='public/upload/'+fName; 
 			fs.renameSync(file.path,newPath);   
 		}	
-		pool.query(`insert into home(banner_gif) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
+		pool.query(`insert into home(banner_video) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
 			if (err) throw err;
 			if(rows){
 				res.send('上传成功')
@@ -88,11 +88,11 @@ router.get('/home_one',function(req,res){
 });
 router.get('/home_two',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select banner_gif from home',function(err,rows){
+	pool.query('select banner_video from home',function(err,rows){
 		if(err) throw err;
 		res.send(rows);
 	})
-});*/
+});
 router.post('/home/three',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -312,11 +312,37 @@ router.post('/home',function(req,res){
 		}			
 	})	
 });
+router.post('/home_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var banner_text=req.body['banner_text'];
+	var services_title=req.body['services_title'];
+	var services_text=req.body['services_text'];
+	var china_title=req.body['china_title'];
+	var china_text=req.body['china_text'];
+	pool.query(`update home set banner_text='${banner_text}',services_title='${services_title}',services_text='${services_text}',china_title='${china_title}',china_text='${china_text}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		console.log(rows)
+		res.send('success')
+	})
+});
+router.post('/home_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var banner_text=req.body['banner_text'];
+	var services_title=req.body['services_title'];
+	var services_text=req.body['services_text'];
+	var china_title=req.body['china_title'];
+	var china_text=req.body['china_text'];
+	pool.query(`delete from home where banner_text='${banner_text}' and services_title='${services_title}' and services_text='${services_text}' and china_title='${china_title}' and china_text='${china_text}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
 router.get('/home_text',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select banner_text,services_title,services_text,china_title,china_text from home',function(err,rows){
+	pool.query('select id,banner_text,services_title,services_text,china_title,china_text from home',function(err,rows){
 		if(err) throw err;
-		console.log(111);
 		res.send(rows);
 	})
 });
@@ -325,7 +351,7 @@ router.post('/home/banner',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var services_one_title=req.body['services_one_title'];
 	var services_one_text=req.body['services_one_text'];
-	var services_one_time=req.body['services_one_time'];
+	var services_one_text=req.body['services_one_time'];
 	var services_two_title=req.body['services_two_title'];
 	var services_two_time=req.body['services_two_time'];
 	pool.query(`insert into home_smallbanner(services_one_title,services_one_text,services_one_time,services_two_title,services_two_time) values('${services_one_title}','${services_one_text}','${services_one_time}','${services_two_title}','${services_two_time}')`,function(err,rows){
@@ -335,7 +361,6 @@ router.post('/home/banner',function(req,res){
 		}			
 	})	
 });
-
 router.get('/home_banner',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	pool.query('select services_one_title,services_one_text,services_one_time,services_two_title,services_two_time from home_smallbanner',function(err,rows){
