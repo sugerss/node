@@ -9,9 +9,9 @@ var pool=mysql.createPool({
 	password:'PARIS9797',
 	database:'list',
 	port:3306
-})
-
+}
 const add='192.168.43.16';
+
 router.post('/img',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -46,13 +46,17 @@ router.post('/img',function(req,res){
 		})	
 	})
 });
-router.get('/team_img',function(req,res){
+router.post('/team_img_replace',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select img from team',function(err,rows){
+	var id=req.body['id'];
+	var img=req.body['img'];
+	pool.query(`update team set img='${img}' where id='${id}'`,function(err,rows){
 		if(err) throw err;
-		res.send(rows);
+		console.log(rows)
+		res.send('success')
 	})
 });
+
 router.post('/',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var name=req.body['name'];
@@ -68,9 +72,30 @@ router.post('/',function(req,res){
 });
 router.get('/team',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select name,job_one,job_two,intro from team',function(err,rows){
+	pool.query('select name,job_one,job_two,intro,img from team',function(err,rows){
 		if(err) throw err;
 		res.send(rows);
+	})
+});
+router.post('/team_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var name=req.body['name'];
+	var job_one=req.body['job_one'];
+	var job_two=req.body['job_two'];
+	var intro=req.body['intro'];
+	pool.query(`update team set name='${name}',job_one='${job_one}',job_two='${job_two}',intro='${intro}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		console.log(rows)
+		res.send('success')
+	})
+});
+router.post('/team_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	pool.query(`delete from team where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
 	})
 });
 module.exports=router;

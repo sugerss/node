@@ -45,6 +45,17 @@ router.post('/img',function(req,res){
 		})	
 	})
 });
+router.post('/img_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var img=req.body['img'];
+	pool.query(`update history set img='${img}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		console.log(rows)
+		res.send('success')
+	})
+});
+
 router.post('/',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var year=req.body['year'];
@@ -61,6 +72,25 @@ router.get('/history',function(req,res){
 	pool.query('select year,text,fff,img,font from history',function(err,rows){
 		if(err) throw err;
 		res.send(rows);
+	})
+});
+router.post('/history_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var year=req.body['year'];
+	var text=req.body['text'];
+	pool.query(`update history set year='${year}',text='${text}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		console.log(rows)
+		res.send('success')
+	})
+});
+router.post('/history_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	pool.query(`delete from history where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
 	})
 });
 module.exports=router;

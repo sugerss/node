@@ -39,7 +39,7 @@ router.post('/',function(req,res){
 			fs.renameSync(file.path,newPath);
 			//res.send(newPath);   
 		}	
-		pool.query(`insert into services(services_gif) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
+		pool.query(`insert into life(life_pic_one) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
 			if (err) throw err;
 			if(rows){
 				res.send('上传成功')
@@ -74,7 +74,7 @@ router.post('/video',function(req,res){
 			fs.renameSync(file.path,newPath);
 			//res.send(newPath);   
 		}	
-		pool.query(`insert into work_focus(pic_one) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
+		pool.query(`insert into life(life_pic_one) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
 			if (err) throw err;
 			if(rows){
 				res.send('上传成功')

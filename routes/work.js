@@ -8,9 +8,9 @@ var pool=mysql.createPool({
 	user:'root',
 	password:'PARIS9797',
 	database:'list',
-	port:3306
-})
+	port:3306});
 const add='192.168.43.16';
+
 router.post('/img/poster',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -52,6 +52,17 @@ router.get('/poster_bg',function(req,res){
 		res.send(rows);
 	})
 });
+router.post('/poster_bg_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var poster_bg=req.body['poster_bg'];
+	pool.query(`update works set poster_bg='${poster_bg}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		console.log(rows)
+		res.send('success')
+	})
+});
+
 router.post('/img/work',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -86,54 +97,24 @@ router.post('/img/work',function(req,res){
 		})	
 	})
 });
-router.get('/video',function(req,res){
+router.get('/work_img',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	pool.query('select work_img from works',function(err,rows){
 		if(err) throw err;
 		res.send(rows);
 	})
 });
-/*router.post('/img/video',function(req,res){	
-	res.header("Access-Control-Allow-Origin", "*"); //跨域
-	var form = new formidable.IncomingForm();
-	form.uploadDir='public/upload/'; 
-	form.parse(req,function(error,fields,files){
-		for(var i in files){
-			var file = files[i];  
-			var fName = (new Date()).getTime()  
-			switch(file.type){   
-				case "image/jpeg":
-				fName=fName+".jpg";
-				break;
-				case "image/jpg":
-				fName=fName+".jpg";
-				break;
-				case "image/png":
-				fName=fName+".png";
-				break;
-				case "image/gif":
-				fName=fName+".gif";
-				break;
-			}
-			var newPath='public/upload/'+fName; 
-			fs.renameSync(file.path,newPath);   
-		}	
-		pool.query(`insert into works(video) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
-			if (err) throw err;
-			if(rows){
-				res.send('上传成功')
-			}
-			
-		})	
+router.post('/work_img_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var work_img=req.body['work_img'];
+	pool.query(`update works set work_img='${work_img}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		console.log(rows)
+		res.send('success')
 	})
 });
-router.get('/video_url',function(req,res){
-	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select video from works',function(err,rows){
-		if(err) throw err;
-		res.send(rows);
-	})
-});*/
+
 router.post('/img/prize',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -175,6 +156,17 @@ router.get('/prize_img',function(req,res){
 		res.send(rows);
 	})
 });
+router.post('/prize_img_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var prize_img=req.body['prize_img'];
+	pool.query(`update works set prize_img='${prize_img}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		console.log(rows)
+		res.send('success')
+	})
+});
+
 router.post('/img/one',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -216,6 +208,25 @@ router.get('/img_one',function(req,res){
 		res.send(rows);
 	})
 });
+router.post('/pic_one_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var pic_one=req.body['pic_one'];
+	pool.query(`update work_focus set pic_one='${pic_one}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		console.log(rows)
+		res.send('success')
+	})
+});
+router.post('/pic_one_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	pool.query(`delete from work_focus where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+
 router.post('/img/two',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -257,6 +268,17 @@ router.get('/img_two',function(req,res){
 		res.send(rows);
 	})
 });
+router.post('/pic_two_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var pic_two=req.body['pic_two'];
+	pool.query(`update work_focus set pic_two='${pic_two}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		console.log(rows)
+		res.send('success')
+	})
+});
+
 router.post('/img/three',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -298,6 +320,17 @@ router.get('/img_three',function(req,res){
 		res.send(rows);
 	})
 });
+router.post('/pic_three_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var pic_three=req.body['pic_three'];
+	pool.query(`update work_focus set pic_three='${pic_three}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		console.log(rows)
+		res.send('success')
+	})
+});
+
 router.post('/img/four',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -339,6 +372,17 @@ router.get('/img_four',function(req,res){
 		res.send(rows);
 	})
 });
+router.post('/pic_four_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var pic_four=req.body['pic_four'];
+	pool.query(`update work_focus set pic_four='${pic_four}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		console.log(rows)
+		res.send('success')
+	})
+});
+
 router.post('/img/poster',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
@@ -380,6 +424,17 @@ router.get('/img_poster',function(req,res){
 		res.send(rows);
 	})
 });
+router.post('/poster_bg_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var poster_bg=req.body['poster_bg'];
+	pool.query(`update work_focus set poster_bg='${poster_bg}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		console.log(rows)
+		res.send('success')
+	})
+});
+
 router.post('/',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var poster_company=req.body['poster_company'];
@@ -388,10 +443,9 @@ router.post('/',function(req,res){
 	var detail=req.body['detail'];
 	var work_say=req.body['work_say'];
 	var work_about=req.body['work_about'];
-	var prize_img=req.body['prize_img'];
 	var prize_text=req.body['prize_text'];
 	var prize_time=req.body['prize_time'];
-	pool.query(`insert into works(poster_company,poster_name,year,detail,work_say,work_about,prize_img,prize_text,prize_time) values('${poster_company}','${poster_name}','${year}','${detail}','${work_say}','${work_about}','${prize_img}','${prize_text}','${prize_time}')`,function(err,rows){
+	pool.query(`insert into works(poster_company,poster_name,year,detail,work_say,work_about,prize_text,prize_time) values('${poster_company}','${poster_name}','${year}','${detail}','${work_say}','${work_about}','${prize_text}','${prize_time}')`,function(err,rows){
 		if (err) throw err;
 		if(rows){
 			res.send('上传成功')
@@ -400,9 +454,35 @@ router.post('/',function(req,res){
 });
 router.get('/text',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select poster_company,poster_name,year,detail,work_say,work_about,prize_img,prize_text,prize_time from works',function(err,rows){
+	pool.query('select poster_company,poster_name,year,detail,work_say,work_about,prize_text,prize_time from works',function(err,rows){
 		if(err) throw err;
 		res.send(rows);
 	})
 });
+router.post('/text_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var poster_company=req.body['poster_company'];
+	var poster_name=req.body['poster_name'];
+	var year=req.body['year'];
+	var detail=req.body['detail'];
+	var work_say=req.body['work_say'];
+	var work_about=req.body['work_about'];
+	var prize_text=req.body['prize_text'];
+	var prize_time=req.body['prize_time'];
+	pool.query(`update works set poster_company='${poster_company}',poster_name='${poster_name}',year='${year}',detail='${detail}',work_say='${work_say}',work_about='${work_about}',prize_text='${prize_text}',prize_time='${prize_time}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		console.log(rows)
+		res.send('success')
+	})
+});
+router.post('/text_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	pool.query(`delete from works where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+
 module.exports=router;
