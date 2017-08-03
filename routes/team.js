@@ -9,7 +9,7 @@ var pool=mysql.createPool({
 	password:'PARIS9797',
 	database:'list',
 	port:3306
-}
+});
 const add='192.168.43.16';
 
 router.post('/img',function(req,res){	
@@ -56,7 +56,6 @@ router.post('/team_img_replace',function(req,res){
 		res.send('success')
 	})
 });
-
 router.post('/',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var name=req.body['name'];

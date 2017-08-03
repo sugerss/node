@@ -227,7 +227,8 @@ router.post('/',function(req,res){
 	var prize_name=req.body['prize_name'];
 	var prize_time=req.body['prize_time'];
 	var vision_history_text=req.body['vision_history_text'];
-	pool.query(`insert into vision(vision_title,vision_text,vision_textarea,prize_name,prize_time,vision_history_text) values('${vision_title}','${vision_text}','${vision_textarea}','${prize_name}','${prize_time}','${vision_history_text}')`,function(err,rows){
+	var vision_btn=req.body['vision_btn'];
+	pool.query(`insert into vision(vision_title,vision_text,vision_textarea,prize_name,prize_time,vision_history_text,vision_btn) values('${vision_title}','${vision_text}','${vision_textarea}','${prize_name}','${prize_time}','${vision_history_text}','${vision_btn}')`,function(err,rows){
 		if (err) throw err;
 		if(rows){
 			res.send('上传成功')
@@ -236,7 +237,7 @@ router.post('/',function(req,res){
 });
 router.get('/vision',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select vision_title,vision_text,vision_textarea,prize_name,prize_time,vision_history_text from vision',function(err,rows){
+	pool.query('select vision_title,vision_text,vision_textarea,prize_name,prize_time,vision_history_text,vision_btn,vision_bg,prize_img from vision',function(err,rows){
 		if(err) throw err;
 		res.send(rows);
 	})
@@ -249,8 +250,9 @@ router.post('/vision_replace',function(req,res){
 	var vision_textarea=req.body['vision_textarea'];
 	var prize_name=req.body['prize_name'];
 	var prize_time=req.body['prize_time'];
+	var vision_btn=req.body['vision_btn'];
 	var vision_history_text=req.body['vision_history_text'];
-	pool.query(`update vision set vision_title='${vision_title}',vision_text='${vision_text}',vision_textarea='${vision_textarea}',prize_name='${prize_name}',prize_time='${prize_time}',vision_history_text='${vision_history_text}' where id='${id}'`,function(err,rows){
+	pool.query(`update vision set vision_title='${vision_title}',vision_text='${vision_text}',vision_textarea='${vision_textarea}',prize_name='${prize_name}',prize_time='${prize_time}',vision_history_text='${vision_history_text}',vision_btn='${vision_btn}' where id='${id}'`,function(err,rows){
 		if(err) throw err;
 		console.log(rows)
 		res.send('success')

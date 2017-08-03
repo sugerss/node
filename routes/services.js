@@ -62,6 +62,14 @@ router.post('/services_gif_replace',function(req,res){
 		res.send('success')
 	})
 });
+router.post('/services_gif_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	pool.query(`delete from services where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
 
 router.post('/img',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*");
@@ -183,7 +191,7 @@ router.post('/',function(req,res){
 });
 router.get('/text',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select services_vision,services_text,services_admin,services_work,services_more from services',function(err,rows){
+	pool.query('select services_vision,services_text,services_admin,services_work,services_more,services_gif,services_img,services_small_pic from services',function(err,rows){
 		if(err) throw err;
 		res.send(rows);
 	})
@@ -210,5 +218,4 @@ router.post('/services_delete',function(req,res){
 		res.send('success')
 	})
 });
-
 module.exports=router;

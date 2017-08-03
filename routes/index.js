@@ -115,7 +115,6 @@ router.post('/home_two_replace',function(req,res){
 	})
 });
 
-
 router.post('/home/three',function(req,res){	
 	res.header("Access-Control-Allow-Origin", "*"); //跨域
 	var form = new formidable.IncomingForm();
