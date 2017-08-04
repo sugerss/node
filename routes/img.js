@@ -36,10 +36,9 @@ router.post('/',function(req,res){
 				break;
 			}
 			var newPath='public/upload/'+fName;  //要返回的图片的路径
-			fs.renameSync(file.path,newPath);
-			//res.send(newPath);   
+			fs.renameSync(file.path,newPath);  
 		}	
-		pool.query(`insert into life(life_pic_one) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
+		pool.query(`insert into works(detail_img) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
 			if (err) throw err;
 			if(rows){
 				res.send('上传成功')

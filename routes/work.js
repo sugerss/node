@@ -12,7 +12,7 @@ var pool=mysql.createPool({
 const add='192.168.43.16';
 
 router.post('/img/poster',function(req,res){	
-	res.header("Access-Control-Allow-Origin", "*"); //跨域
+	res.header("Access-Control-Allow-Origin", "*"); 
 	var form = new formidable.IncomingForm();
 	form.uploadDir='public/upload/'; 
 	form.parse(req,function(error,fields,files){
@@ -57,6 +57,58 @@ router.post('/poster_bg_replace',function(req,res){
 	var id=req.body['id'];
 	var poster_bg=req.body['poster_bg'];
 	pool.query(`update works set poster_bg='${poster_bg}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		console.log(rows)
+		res.send('success')
+	})
+});
+
+router.post('/img/detail',function(req,res){	
+	res.header("Access-Control-Allow-Origin", "*"); //跨域
+	var form = new formidable.IncomingForm();
+	form.uploadDir='public/upload/'; 
+	form.parse(req,function(error,fields,files){
+		for(var i in files){
+			var file = files[i];  
+			var fName = (new Date()).getTime()  
+			switch(file.type){   
+				case "image/jpeg":
+				fName=fName+".jpg";
+				break;
+				case "image/jpg":
+				fName=fName+".jpg";
+				break;
+				case "image/png":
+				fName=fName+".png";
+				break;
+				case "image/gif":
+				fName=fName+".gif";
+				break;
+			}
+			var newPath='public/upload/'+fName; 
+			fs.renameSync(file.path,newPath);   
+		}	
+		pool.query(`insert into works(detail_img) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
+			if (err) throw err;
+			if(rows){
+				res.send('上传成功')
+			}
+			
+		})	
+	})
+});
+router.get('/detail_img',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	pool.query('select detail_img from works',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
+router.post('/poster_bg_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var detail_img=req.body['detail_img'];
+	pool.query(`update works set detail_img='${detail_img}' where id='${id}'`,function(err,rows){
 		if(err) throw err;
 		console.log(rows)
 		res.send('success')
@@ -383,57 +435,6 @@ router.post('/pic_four_replace',function(req,res){
 	})
 });
 
-router.post('/img/poster',function(req,res){	
-	res.header("Access-Control-Allow-Origin", "*"); //跨域
-	var form = new formidable.IncomingForm();
-	form.uploadDir='public/upload/'; 
-	form.parse(req,function(error,fields,files){
-		for(var i in files){
-			var file = files[i];  
-			var fName = (new Date()).getTime()  
-			switch(file.type){   
-				case "image/jpeg":
-				fName=fName+".jpg";
-				break;
-				case "image/jpg":
-				fName=fName+".jpg";
-				break;
-				case "image/png":
-				fName=fName+".png";
-				break;
-				case "image/gif":
-				fName=fName+".gif";
-				break;
-			}
-			var newPath='public/upload/'+fName; 
-			fs.renameSync(file.path,newPath);   
-		}	
-		pool.query(`insert into works(poster_bg) values('http://${add}:8005/upload/${fName}')`,function(err,rows){
-			if (err) throw err;
-			if(rows){
-				res.send('上传成功')
-			}
-			
-		})	
-	})
-});
-router.get('/img_poster',function(req,res){
-	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select poster_bg from works',function(err,rows){
-		if(err) throw err;
-		res.send(rows);
-	})
-});
-router.post('/poster_bg_replace',function(req,res){
-	res.header("Access-Control-Allow-Origin", "*");
-	var id=req.body['id'];
-	var poster_bg=req.body['poster_bg'];
-	pool.query(`update work_focus set poster_bg='${poster_bg}' where id='${id}'`,function(err,rows){
-		if(err) throw err;
-		console.log(rows)
-		res.send('success')
-	})
-});
 
 router.post('/',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
@@ -444,8 +445,9 @@ router.post('/',function(req,res){
 	var work_say=req.body['work_say'];
 	var work_about=req.body['work_about'];
 	var prize_text=req.body['prize_text'];
+	var prize_text=req.body['prize_text_two'];
 	var prize_time=req.body['prize_time'];
-	pool.query(`insert into works(poster_company,poster_name,year,detail,work_say,work_about,prize_text,prize_time) values('${poster_company}','${poster_name}','${year}','${detail}','${work_say}','${work_about}','${prize_text}','${prize_time}')`,function(err,rows){
+	pool.query(`insert into works(poster_company,poster_name,year,detail,work_say,work_about,prize_text,prize_time,prize_text_two) values('${poster_company}','${poster_name}','${year}','${detail}','${work_say}','${work_about}','${prize_text}','${prize_time}','${prize_text_two}')`,function(err,rows){
 		if (err) throw err;
 		if(rows){
 			res.send('上传成功')
@@ -454,7 +456,15 @@ router.post('/',function(req,res){
 });
 router.get('/text',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select poster_company,poster_name,year,detail,work_say,work_about,prize_text,prize_time from works',function(err,rows){
+	pool.query('select id,poster_company,poster_name,year,detail,work_say,work_about,prize_text,prize_time,detail_img,prize_text_two from works',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
+router.post('/text',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	pool.query(`select * from works where id='${id}'`,function(err,rows){
 		if(err) throw err;
 		res.send(rows);
 	})
@@ -469,8 +479,9 @@ router.post('/text_replace',function(req,res){
 	var work_say=req.body['work_say'];
 	var work_about=req.body['work_about'];
 	var prize_text=req.body['prize_text'];
+	var prize_text=req.body['prize_text_two'];
 	var prize_time=req.body['prize_time'];
-	pool.query(`update works set poster_company='${poster_company}',poster_name='${poster_name}',year='${year}',detail='${detail}',work_say='${work_say}',work_about='${work_about}',prize_text='${prize_text}',prize_time='${prize_time}' where id='${id}'`,function(err,rows){
+	pool.query(`update works set poster_company='${poster_company}',poster_name='${poster_name}',year='${year}',detail='${detail}',work_say='${work_say}',work_about='${work_about}',prize_text='${prize_text}',prize_time='${prize_time}',prize_text_two='${prize_text_two}' where id='${id}'`,function(err,rows){
 		if(err) throw err;
 		console.log(rows)
 		res.send('success')

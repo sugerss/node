@@ -28,7 +28,15 @@ router.post('/',function(req,res){
 });
 router.get('/press',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select contact,title,sub_title,con,time,detail from press',function(err,rows){
+	pool.query('select id,contact,title,sub_title,con,time,detail from press',function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
+router.post('/press',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	pool.query(`select * from press where id='${id}'`,function(err,rows){
 		if(err) throw err;
 		res.send(rows);
 	})

@@ -191,12 +191,20 @@ router.post('/',function(req,res){
 });
 router.get('/text',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select services_vision,services_text,services_admin,services_work,services_more,services_gif,services_img,services_small_pic from services',function(err,rows){
+	pool.query('select id,services_vision,services_text,services_admin,services_work,services_more,services_gif,services_img,services_small_pic from services',function(err,rows){
 		if(err) throw err;
 		res.send(rows);
 	})
 });
-router.post('/services_img_replace',function(req,res){
+router.post('/text',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	pool.query(`select * from services where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send(rows);
+	})
+});
+router.post('/services_replace',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var id=req.body['id'];
 	var services_vision=req.body['services_vision'];

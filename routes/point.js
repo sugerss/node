@@ -27,8 +27,17 @@ router.post('/',function(req,res){
 });
 router.get('/points',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select title,name,text,time,detail from point',function(err,rows){
+	pool.query('select id,title,name,text,time,detail from point',function(err,rows){
 		if(err) throw err;
+		res.send(rows);
+	})
+});
+router.post('/points',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	pool.query(`select * from point where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		console.log(id)
 		res.send(rows);
 	})
 });
