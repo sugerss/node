@@ -309,7 +309,6 @@ router.post('/img/two',function(req,res){
 			if(rows){
 				res.send('上传成功')
 			}
-			
 		})	
 	})
 });
@@ -435,7 +434,6 @@ router.post('/pic_four_replace',function(req,res){
 	})
 });
 
-
 router.post('/',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var poster_company=req.body['poster_company'];
@@ -447,7 +445,7 @@ router.post('/',function(req,res){
 	var prize_text=req.body['prize_text'];
 	var prize_text=req.body['prize_text_two'];
 	var prize_time=req.body['prize_time'];
-	pool.query(`insert into works(poster_company,poster_name,year,detail,work_say,work_about,prize_text,prize_time,prize_text_two) values('${poster_company}','${poster_name}','${year}','${detail}','${work_say}','${work_about}','${prize_text}','${prize_time}','${prize_text_two}')`,function(err,rows){
+	pool.query(`insert into works(poster_company,poster_name,year,detail,work_say,work_about,prize_text,prize_time) values('${poster_company}','${poster_name}','${year}','${detail}','${work_say}','${work_about}','${prize_text}','${prize_time}')`,function(err,rows){
 		if (err) throw err;
 		if(rows){
 			res.send('上传成功')
@@ -456,7 +454,7 @@ router.post('/',function(req,res){
 });
 router.get('/text',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
-	pool.query('select id,poster_company,poster_name,year,detail,work_say,work_about,prize_text,prize_time,detail_img,prize_text_two from works',function(err,rows){
+	pool.query('select id,poster_company,poster_name,year,detail,work_say,work_about,prize_text,prize_time,detail_img,prize_text_two,poster_bg,detail_img,work_img,prize_img from works',function(err,rows){
 		if(err) throw err;
 		res.send(rows);
 	})
@@ -469,28 +467,167 @@ router.post('/text',function(req,res){
 		res.send(rows);
 	})
 });
-router.post('/text_replace',function(req,res){
+
+router.post('/company_replace',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var id=req.body['id'];
 	var poster_company=req.body['poster_company'];
-	var poster_name=req.body['poster_name'];
-	var year=req.body['year'];
-	var detail=req.body['detail'];
-	var work_say=req.body['work_say'];
-	var work_about=req.body['work_about'];
-	var prize_text=req.body['prize_text'];
-	var prize_text=req.body['prize_text_two'];
-	var prize_time=req.body['prize_time'];
-	pool.query(`update works set poster_company='${poster_company}',poster_name='${poster_name}',year='${year}',detail='${detail}',work_say='${work_say}',work_about='${work_about}',prize_text='${prize_text}',prize_time='${prize_time}',prize_text_two='${prize_text_two}' where id='${id}'`,function(err,rows){
+	pool.query(`update works set poster_company='${poster_company}' where id='${id}'`,function(err,rows){
 		if(err) throw err;
-		console.log(rows)
 		res.send('success')
 	})
 });
-router.post('/text_delete',function(req,res){
+router.post('/name_replace',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
 	var id=req.body['id'];
-	pool.query(`delete from works where id='${id}'`,function(err,rows){
+	var poster_name=req.body['poster_name'];
+	pool.query(`update works set poster_name='${poster_name}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/year_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var year=req.body['year'];
+	pool.query(`update works set year='${year}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/detail_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var detail=req.body['detail'];
+	pool.query(`update works set detail='${detail}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/work_say_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var work_say=req.body['work_say'];
+	pool.query(`update works set work_say='${work_say}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/work_about_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var work_about=req.body['work_about'];
+	pool.query(`update works set work_about='${work_about}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/prize_text_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var prize_text=req.body['prize_text'];
+	pool.query(`update works set prize_text='${prize_text}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/prize_text_two_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var prize_text_two=req.body['prize_text_two'];
+	pool.query(`update works set prize_text_two='${prize_text_two}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/prize_time_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var prize_time=req.body['prize_time'];
+	pool.query(`update works set prize_time='${prize_time}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+
+
+router.post('/company_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var poster_company=req.body['poster_company'];
+	pool.query(`update works set poster_company='${poster_company}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/name_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var poster_name=req.body['poster_name'];
+	pool.query(`update works set poster_name='${poster_name}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/year_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var year=req.body['year'];
+	pool.query(`update works set year='${year}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/detail_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var detail=req.body['detail'];
+	pool.query(`update works set detail='${detail}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/work_say_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var work_say=req.body['work_say'];
+	pool.query(`update works set work_say='${work_say}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/work_about_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var work_about=req.body['work_about'];
+	pool.query(`update works set work_about='${work_about}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/prize_text_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var prize_text=req.body['prize_text'];
+	pool.query(`update works set prize_text='${prize_text}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/prize_text_two_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var prize_text_two=req.body['prize_text_two'];
+	pool.query(`update works set prize_text_two='${prize_text_two}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/prize_time_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var prize_time=req.body['prize_time'];
+	pool.query(`update works set prize_time='${prize_time}' where id='${id}'`,function(err,rows){
 		if(err) throw err;
 		res.send('success')
 	})

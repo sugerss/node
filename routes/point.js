@@ -41,29 +41,7 @@ router.post('/points',function(req,res){
 		res.send(rows);
 	})
 });
-router.post('/replace',function(req,res){
-	res.header("Access-Control-Allow-Origin", "*");
-	var id=req.body['id'];
-	var title=req.body['title'];
-	var name=req.body['name'];
-	var text=req.body['text'];
-	var time=req.body['time'];
-	var china_title=req.body['china_title'];
-	var china_text=req.body['china_text'];
-	pool.query(`update point set title='${title}',name='${name}',text='${text}',time='${time}',detail='${detail}' where id='${id}'`,function(err,rows){
-		if(err) throw err;
-		console.log(rows)
-		res.send('success')
-	})
-});
-router.post('/delete',function(req,res){
-	res.header("Access-Control-Allow-Origin", "*");
-	var id=req.body['id'];
-	pool.query(`delete from point where id='${id}'`,function(err,rows){
-		if(err) throw err;
-		res.send('success')
-	})
-});
+
 
 router.post('/popular',function(req,res){
 	res.header("Access-Control-Allow-Origin", "*");
@@ -103,5 +81,125 @@ router.post('/popular_delete',function(req,res){
 	})
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+router.post('/title_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var title=req.body['title'];
+	pool.query(`update point set title='${title}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/name_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var name=req.body['name'];
+	pool.query(`update point set name='${name}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/text_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var text=req.body['text'];
+	pool.query(`update point set text='${text}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/time_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var time=req.body['time'];
+	pool.query(`update point set time='${time}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/detail_replace',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var detail=req.body['detail'];
+	pool.query(`update point set detail='${detail}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+
+
+
+
+router.post('/title_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var title=req.body['title'];
+	pool.query(`update point set title='${title}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/name_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var name=req.body['name'];
+	pool.query(`update point set name='${name}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/text_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var text=req.body['text'];
+	pool.query(`update works set text='${text}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/time_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var time=req.body['time'];
+	pool.query(`update point set time='${time}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
+router.post('/detail_delete',function(req,res){
+	res.header("Access-Control-Allow-Origin", "*");
+	var id=req.body['id'];
+	var detail=req.body['detail'];
+	pool.query(`update point set detail='${detail}' where id='${id}'`,function(err,rows){
+		if(err) throw err;
+		res.send('success')
+	})
+});
 
 module.exports=router;
